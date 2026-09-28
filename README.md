@@ -25,7 +25,7 @@ GitHub Pages publishes the `main` branch from `/ (root)`. Commit and push update
 
 The supplied `rep2text.pdf` is the source of the abstract, author order, method descriptions, figures, and experimental values. NeurIPS 2026 acceptance is stated by the author and on the supplied PDF.
 
-- The PDF labels both Cisco Research and Wake Forest University with affiliation 3, while Fan Yang has superscript 4. The website uses 4 for Wake Forest University to match Fan Yang's superscript and institutional email; the original PDF is preserved.
+- Author affiliations follow the updated PDF: Fan Yang is affiliation 3 (Wake Forest University), and Ali Payani is affiliation 4 (Cisco Research).
 - The main table reproduces the mean ROUGE and BERTScore values of all eight configurations in Table 1. Standard deviations and additional metrics are available in the paper.
 - The analysis figures are Figures 4 and 5. The original/reconstructed text example comes from Table 3 and is explicitly identified as a selected example.
 - The clinical results use the Mistral-7B-v0.1 section of Table 2. The summary follows the tabulated values and retains the paper's caveat about imperfect recovery of critical details.
