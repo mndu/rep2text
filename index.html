@@ -3,121 +3,68 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Rep2Text decodes input text from a single last-token representation of a language model. A NeurIPS 2026 paper on representation inversion and information retention.">
-  <meta name="theme-color" content="#275c50">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Rep2Text | NeurIPS 2026">
-  <meta property="og:description" content="Decoding Full Text from a Single LLM Token Representation">
-  <meta property="og:url" content="https://mndu.github.io/rep2text/">
-  <meta property="og:image" content="https://mndu.github.io/rep2text/assets/framework.webp">
-  <link rel="canonical" href="https://mndu.github.io/rep2text/">
-  <title>Rep2Text · NeurIPS 2026</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Rep2Text: Decoding Full Text from a Single LLM Token Representation. NeurIPS 2026 project page.">
+  <title>Rep2Text</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="paper.css">
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#overview">Skip to content</a>
   <main>
-    <header class="hero">
-      <h1><span class="project-name">Rep2Text</span><span class="paper-title">Decoding Full Text from a Single<br class="desktop-break"> LLM Token Representation</span></h1>
-      <div class="authors">
-        <span>Haiyan Zhao<sup>1</sup></span><span>Zirui He<sup>1</sup></span><span>Yiming Tang<sup>2</sup></span><span>Fan Yang<sup>3</sup></span><span>Ali Payani<sup>4</sup></span><span>Dianbo Liu<sup>2</sup></span><span>Mengnan Du<sup>5,†</sup></span>
-      </div>
-      <div class="affiliations"><span><sup>1</sup> New Jersey Institute of Technology</span><span><sup>2</sup> National University of Singapore</span><span><sup>3</sup> Wake Forest University</span><span><sup>4</sup> Cisco Research</span><span><sup>5</sup> The Chinese University of Hong Kong, Shenzhen</span></div>
-      <p class="corresponding">† Corresponding author</p>
-      <div class="resources">
-        <a class="button primary" href="rep2text.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v6h5M9 13h6M9 17h6"/></svg> Read the paper</a>
-        <a class="button" href="https://arxiv.org/abs/2511.06571"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6L10 14M10 5H5v14h14v-5"/></svg> arXiv</a>
-        <a class="button" href="#citation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7H4v6h6V7ZM20 7h-6v6h6V7ZM10 13c0 4-2 5-4 5m14-5c0 4-2 5-4 5"/></svg> BibTeX</a>
-      </div>
-    </header>
+    <section class="sheet home">
+      <h1>Rep2Text: Decoding Full Text from a Single<br class="wide-only"> LLM Token Representation</h1>
+      <p class="authors">Haiyan Zhao<sup>1</sup>, Zirui He<sup>1</sup>, Yiming Tang<sup>2</sup>, Fan Yang<sup>3</sup>, Ali Payani<sup>4</sup>, Dianbo Liu<sup>2</sup>, Mengnan Du<sup>5,†</sup></p>
+      <p class="institutions"><sup>1</sup> New Jersey Institute of Technology, <sup>2</sup> National University of Singapore,<br class="wide-only"> <sup>3</sup> Wake Forest University, <sup>4</sup> Cisco Research, <sup>5</sup> The Chinese University of Hong Kong, Shenzhen</p>
+      <p class="author-note">† Corresponding author</p>
+      <p class="links"><a href="rep2text.pdf">[Paper]</a>&nbsp; <a href="https://arxiv.org/abs/2511.06571">[arXiv]</a></p>
+      <figure class="framework"><a href="assets/framework.webp" aria-label="Open the full-size framework figure"><img src="assets/framework.webp" width="1596" height="656" alt="Rep2Text architecture: a target model's last-token hidden state passes through a trainable adapter into the token embedding space of a decoder that reconstructs the input text."></a><figcaption>Figure 1. Rep2Text reconstructs text from a single last-token representation. Figure from the paper. Select the image to view it full size.</figcaption></figure>
+    </section>
 
-    <section class="intro section" id="overview" aria-labelledby="overview-title">
-      <p class="eyebrow">FROM REPRESENTATIONS BACK TO TEXT</p>
+    <section class="sheet" aria-labelledby="overview-title">
       <h2 id="overview-title">Overview</h2>
-      <p class="lead">Rep2Text learns to read a language model’s last-token hidden state—recovering roughly half of the unigrams in 16-token Wikipedia sequences, while preserving much of their meaning.</p>
-      <figure class="framework"><a href="assets/framework.webp" aria-label="View the full-size Rep2Text framework"><img src="assets/framework.webp" width="1596" height="656" alt="Rep2Text architecture: a target model's last-token hidden state passes through a gated adapter into the embedding space of a decoding language model, which reconstructs the input text."></a><figcaption><strong>The Rep2Text framework.</strong> A trainable adapter bridges the target model’s representation space and the decoder’s token embedding space. The decoder reconstructs text autoregressively from the projected embeddings and prompts.</figcaption></figure>
-    </section>
-
-    <section class="abstract-band" aria-labelledby="abstract-title"><div class="section narrow">
-      <h2 id="abstract-title">Abstract</h2>
-      <p>Large language models (LLMs) have achieved remarkable progress across diverse tasks, yet their internal mechanisms remain largely opaque. In this work, we investigate a fundamental question: to what extent can the original input text be recovered from a single last-token representation in an LLM? To this end, we propose <strong>Rep2Text</strong>, a novel framework for decoding text from last-token representations. Rep2Text employs a trainable adapter that maps a target model’s last-token representation into the token embedding space of a decoding language model, which then autoregressively reconstructs the input text. On Wikipedia-derived 16-token sequences, Rep2Text recovers roughly half of the tokens from a single last-token representation across multiple target and decoding model combinations, while preserving strong semantic coherence. Further analysis reveals a clear information bottleneck effect: as sequence length increases, token-level recovery declines, while semantic information remains relatively well preserved. We also find that scaling effects are less pronounced in inversion tasks. Finally, our framework demonstrates robust generalization to out-of-distribution clinical data.</p>
-    </div></section>
-
-    <section class="section" id="method" aria-labelledby="method-title">
-      <p class="eyebrow">THE METHOD</p><h2 id="method-title">Rep2Text Method</h2>
-      <p class="section-intro">Reconstruct input text from one hidden-state vector, without iterative search at inference time.</p>
-      <div class="steps">
-        <article><span class="step-number">01</span><h3>Extract one representation</h3><p>Process an input sequence with the target LLM and retain only the residual-stream representation of its last token at a selected layer.</p><span class="step-tag">One hidden-state vector</span></article>
-        <article><span class="step-number">02</span><h3>Align the latent spaces</h3><p>A two-layer MLP with gated skip connections maps the representation into a sequence of embeddings in the decoding model’s input space.</p><span class="step-tag">Trainable adapter</span></article>
-        <article><span class="step-number">03</span><h3>Reconstruct the input</h3><p>Combine the projected embeddings with system and user prompts. A decoding LLM then generates the recovered text autoregressively.</p><span class="step-tag">Frozen decoder by default</span></article>
+      <div class="body-copy">
+        <p>Rep2Text studies how much of an input can be recovered from one last-token hidden state in a language model. It uses a trainable adapter to map the target model’s representation into the token embedding space of a decoding model. The decoder then generates a reconstruction of the original sequence.</p>
+        <p>On 16-token Wikipedia sequences, the method recovers substantial lexical information and preserves much of the input’s meaning across several target and decoder combinations. The paper also studies how recovery changes with model choice, input length, and representation depth. Exact reconstruction remains difficult, especially when a detail is encoded imperfectly.</p>
       </div>
     </section>
 
-    <section class="section results" id="results" aria-labelledby="results-title">
-      <p class="eyebrow">CROSS-MODEL INVERSION</p><h2 id="results-title">Experimental Results</h2>
-      <p class="section-intro">Layer-10 representations of 16-token Wikipedia sequences. Only the adapter is trained; the decoder remains frozen.</p>
-      <div class="highlights">
-        <div><strong>0.45–0.52</strong><span>ROUGE-1</span><small>Unigram overlap across eight model combinations</small></div>
-        <div><strong>0.75–0.81</strong><span>BERTScore</span><small>Semantic similarity of reconstructed text</small></div>
-        <div><strong>3B → 32B</strong><span>Decoder sizes explored</span><small>Larger decoders do not consistently improve recovery</small></div>
-      </div>
-      <div class="table-heading"><h3>Representation inversion across models</h3><span>Higher is better ↑</span></div>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="Cross-model results; scroll horizontally on smaller screens">
-        <table><caption class="sr-only">Mean scores from Table 1 on 16-token Wikipedia sequences. All metrics range from zero to one.</caption>
-          <thead><tr><th scope="col">Target model</th><th scope="col">Decoding model</th><th scope="col">ROUGE-1</th><th scope="col">ROUGE-2</th><th scope="col">ROUGE-L</th><th scope="col">BERTScore</th></tr></thead>
-          <tbody>
-            <tr class="group"><th colspan="6" scope="rowgroup">A · Fixed decoder: target-model invertibility</th></tr>
-            <tr><th scope="row">Gemma-7B</th><td>Llama-3.1-8B</td><td>0.51</td><td>0.28</td><td>0.49</td><td>0.75</td></tr>
-            <tr><th scope="row">Mistral-7B-v0.1</th><td>Llama-3.1-8B</td><td>0.52</td><td>0.32</td><td>0.51</td><td>0.81</td></tr>
-            <tr><th scope="row">Llama-3.1-8B</th><td>Llama-3.1-8B</td><td>0.48</td><td>0.28</td><td>0.47</td><td>0.78</td></tr>
-            <tr><th scope="row">Llama-3.2-3B</th><td>Llama-3.1-8B</td><td>0.45</td><td>0.25</td><td>0.43</td><td>0.76</td></tr>
-          </tbody><tbody>
-            <tr class="group"><th colspan="6" scope="rowgroup">B · Alternative decoder: cross-model robustness</th></tr>
-            <tr><th scope="row">Mistral-7B-v0.1</th><td>Llama-3.2-3B</td><td>0.52</td><td>0.32</td><td>0.50</td><td>0.80</td></tr>
-            <tr><th scope="row">Llama-3.2-3B</th><td>Llama-3.2-3B</td><td>0.46</td><td>0.26</td><td>0.45</td><td>0.76</td></tr>
-          </tbody><tbody>
-            <tr class="group"><th colspan="6" scope="rowgroup">C · Qwen decoders: scaling and model-family effects</th></tr>
-            <tr><th scope="row">Mistral-7B-v0.1</th><td>Qwen-2.5-14B</td><td>0.48</td><td>0.27</td><td>0.47</td><td>0.78</td></tr>
-            <tr><th scope="row">Mistral-7B-v0.1</th><td>Qwen-2.5-32B</td><td>0.47</td><td>0.25</td><td>0.45</td><td>0.76</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="table-note">Selected mean scores from Table 1; standard deviations and structure, entity, and topic scores are reported in the paper. ROUGE measures token overlap, not the percentage of sequences reconstructed exactly.</p>
-    </section>
-
-    <section class="section analysis-section" aria-labelledby="analysis-title">
-      <p class="eyebrow">WHAT THE REPRESENTATION PRESERVES</p><h2 id="analysis-title">Representation Analysis</h2>
-      <div class="analysis-grid">
-        <figure><a href="assets/sequence-length.webp" aria-label="View the full-size input-length analysis"><img src="assets/sequence-length.webp" width="780" height="388" loading="lazy" alt="Figure 4: lexical recovery falls as input length increases from 8 to 64 tokens, while semantic scores decline more slowly."></a><figcaption><h3>Effect of Input Length</h3><p>As input length grows from 8 to 64 tokens, ROUGE-1 falls from about 0.60 to 0.30. Semantic information is relatively better preserved. Llama-3.1-8B target and decoder, layer 10.</p></figcaption></figure>
-        <figure><a href="assets/layer-depth.webp" aria-label="View the full-size layer-depth analysis"><img src="assets/layer-depth.webp" width="788" height="388" loading="lazy" alt="Figure 5: inversion of 16-token inputs is strongest around layers 10 to 15, with different metrics peaking at different depths."></a><figcaption><h3>Effect of Layer Depth</h3><p>Recovery is strongest around layers 10–15. Structure and BERTScore peak around layer 10, while lexical and entity information remain strong into layer 15. Llama-3.1-8B, 16-token inputs.</p></figcaption></figure>
+    <section class="sheet" aria-labelledby="results-title">
+      <h2 id="results-title">Results</h2>
+      <div class="body-copy">
+        <p>Table 2 compares Rep2Text with an adapted Vec2Text baseline on Wikipedia inputs of at most 32 tokens. For the Mistral target, Rep2Text improves ROUGE-1, Token F1, and BERTScore. For the Llama target, it improves Token F1 and matches the baseline’s BERTScore, while Vec2Text Base has a slightly higher ROUGE-1.</p>
+        <figure class="result-figure quantitative">
+          <div class="table-scroll" role="region" aria-label="Rep2Text and Vec2Text numeric comparison; scroll horizontally on smaller screens" tabindex="0">
+            <table><thead><tr><th scope="col">Target model</th><th scope="col">Method</th><th scope="col">ROUGE-1 ↑</th><th scope="col">Token F1 ↑</th><th scope="col">BERTScore ↑</th></tr></thead><tbody>
+              <tr><th scope="row">Mistral-7B-v0.1</th><td>Vec2Text Base</td><td>0.38</td><td>0.31</td><td>0.71</td></tr>
+              <tr><th scope="row">Mistral-7B-v0.1</th><td>Vec2Text + Corrector (50 steps)</td><td>0.38</td><td>0.31</td><td>0.71</td></tr>
+              <tr class="ours"><th scope="row">Mistral-7B-v0.1</th><td>Rep2Text</td><td>0.41</td><td>0.42</td><td>0.73</td></tr>
+              <tr><th scope="row">Llama-3.1-8B</th><td>Vec2Text Base</td><td>0.37</td><td>0.29</td><td>0.70</td></tr>
+              <tr><th scope="row">Llama-3.1-8B</th><td>Vec2Text + Corrector (50 steps)</td><td>0.35</td><td>0.27</td><td>0.68</td></tr>
+              <tr class="ours"><th scope="row">Llama-3.1-8B</th><td>Rep2Text</td><td>0.36</td><td>0.39</td><td>0.70</td></tr>
+            </tbody></table>
+          </div>
+          <figcaption>Table 2. Wikipedia results with Qwen-2.5-14B as the decoder for Rep2Text. Inputs contain no more than 32 tokens; higher is better.</figcaption>
+        </figure>
+        <h3>Qualitative Example</h3>
+        <p>In the example below from Table 3, the reconstruction retains the person’s name, birth date, and occupations. One letter differs in the given name: “Phillip” becomes “Philip.”</p>
+        <figure class="result-figure qualitative">
+          <div class="case-grid">
+            <div class="case"><h4>Original input</h4><p class="case-label">Wikipedia sequence</p><p>Phil LaMarr<br>Phillip LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</p><p class="activation">Ground truth</p></div>
+            <div class="case"><h4>Rep2Text</h4><p class="case-label">Reconstructed sequence</p><p>Phil LaMarr<br>Philip LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</p><p class="activation">Token F1: <strong>0.94</strong> · BLEU: <strong>0.902</strong></p></div>
+          </div>
+          <figcaption>Table 3. An in-distribution text-reconstruction example.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <section class="section case-section" aria-labelledby="case-title">
-      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">Qualitative Example</h2>
-      <p class="section-intro">An in-distribution example from Table 3. Token F1: <strong>0.94</strong> · BLEU: <strong>0.902</strong>.</p>
-      <div class="case-grid">
-        <article class="case baseline"><div class="case-top"><h3>Original input</h3><span>Wikipedia</span></div><p class="small-label">GROUND-TRUTH SEQUENCE</p><blockquote>Phil LaMarr<br><mark>Phillip</mark> LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</blockquote></article>
-        <article class="case improved"><div class="case-top"><h3>Rep2Text reconstruction</h3><span>Decoded</span></div><p class="small-label">INVERTED SEQUENCE</p><blockquote>Phil LaMarr<br><mark>Philip</mark> LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</blockquote></article>
-      </div>
-    </section>
-
-    <section class="section citation" id="citation" aria-labelledby="citation-title">
-      <div class="citation-heading"><div><p class="eyebrow">REFERENCE</p><h2 id="citation-title">Citation</h2></div><button class="copy-button" id="copy-citation" type="button">Copy BibTeX</button></div>
-      <pre><code id="bibtex">@inproceedings{zhao2026rep2text,
-  title     = {{Rep2Text}: Decoding Full Text from a Single
-               {LLM} Token Representation},
-  author    = {Zhao, Haiyan and He, Zirui and Tang, Yiming and
-               Yang, Fan and Payani, Ali and Liu, Dianbo and Du, Mengnan},
+    <section class="sheet bib-sheet" aria-labelledby="bibtex-title">
+      <h2 id="bibtex-title">BibTeX</h2>
+      <pre><code>@inproceedings{zhao2026rep2text,
+  title     = {{Rep2Text}: Decoding Full Text from a Single {LLM} Token Representation},
+  author    = {Zhao, Haiyan and He, Zirui and Tang, Yiming and Yang, Fan and Payani, Ali and Liu, Dianbo and Du, Mengnan},
   booktitle = {Advances in Neural Information Processing Systems},
   year      = {2026},
   url       = {https://arxiv.org/abs/2511.06571}
-}</code></pre><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+}</code></pre>
     </section>
   </main>
-  <footer><span>Rep2Text · NeurIPS 2026</span><a href="mailto:mengnandu@cuhk.edu.cn">Contact</a><a href="https://arxiv.org/abs/2511.06571">arXiv ↗</a></footer>
 </body>
 </html>
