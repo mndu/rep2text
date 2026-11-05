@@ -27,8 +27,7 @@ The supplied `rep2text.pdf` is the source of the abstract, author order, method 
 
 - Author affiliations follow the updated PDF: Fan Yang is affiliation 3 (Wake Forest University), and Ali Payani is affiliation 4 (Cisco Research).
 - The main table reproduces the mean ROUGE and BERTScore values of all eight configurations in Table 1. Standard deviations and additional metrics are available in the paper.
-- The analysis figures are Figures 4 and 5. The original/reconstructed text example comes from Table 3 and is explicitly identified as a selected example.
-- The clinical results use the Mistral-7B-v0.1 section of Table 2. The summary follows the tabulated values and retains the paper's caveat about imperfect recovery of critical details.
+- The analysis figures are Figures 4 and 5. The original/reconstructed text example comes from Table 3.
 - The citation omits unconfirmed volume and page details. Update these when official proceedings metadata is available.
 - No official research-code URL was found in the supplied PDF or checked public sources, so the page does not present the website repository as research code.
 

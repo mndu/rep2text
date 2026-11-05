@@ -103,18 +103,6 @@
         <article class="case baseline"><div class="case-top"><h3>Original input</h3><span>Wikipedia</span></div><p class="small-label">GROUND-TRUTH SEQUENCE</p><blockquote>Phil LaMarr<br><mark>Phillip</mark> LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</blockquote></article>
         <article class="case improved"><div class="case-top"><h3>Rep2Text reconstruction</h3><span>Decoded</span></div><p class="small-label">INVERTED SEQUENCE</p><blockquote>Phil LaMarr<br><mark>Philip</mark> LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</blockquote></article>
       </div>
-      <p class="table-note">This is a selected example, not the average result. The highlighted name differs by one character; high semantic similarity does not guarantee exact reconstruction.</p>
-    </section>
-
-    <section class="section transfer" aria-labelledby="transfer-title">
-      <p class="eyebrow">BEYOND THE TRAINING DOMAIN</p><h2 id="transfer-title">Cross-Domain Generalization</h2>
-      <p class="section-intro">Trained on Wikipedia, evaluated on out-of-distribution clinical summaries. Mistral-7B-v0.1 target; Rep2Text uses a Qwen-2.5-14B decoder.</p>
-      <div class="table-scroll" tabindex="0" role="region" aria-label="Out-of-distribution clinical results; scroll horizontally on smaller screens"><table><caption class="sr-only">Selected clinical results from Table 2 for inputs of no more than 32 tokens. Higher is better for all shown metrics.</caption><thead><tr><th scope="col">Method</th><th scope="col">ROUGE-1 ↑</th><th scope="col">Token F1 ↑</th><th scope="col">BERTScore ↑</th><th scope="col">Topic ↑</th></tr></thead><tbody>
-        <tr><th scope="row">Vec2Text Base</th><td>0.14</td><td>0.13</td><td>0.53</td><td>0.21</td></tr>
-        <tr><th scope="row">Vec2Text + Corrector (50 steps)</th><td>0.13</td><td>0.11</td><td>0.52</td><td>0.20</td></tr>
-        <tr class="ours"><th scope="row">Rep2Text <span>Ours</span></th><td>0.37</td><td>0.26</td><td>0.74</td><td>0.64</td></tr>
-      </tbody></table></div>
-      <p class="table-note">Table 2, inputs of no more than 32 tokens. Rep2Text preserves coarse structure and meaning under domain shift, but may still alter critical details such as age and symptom duration.</p>
     </section>
 
     <section class="section citation" id="citation" aria-labelledby="citation-title">
