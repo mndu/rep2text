@@ -36,7 +36,7 @@
 
     <section class="intro section" id="overview" aria-labelledby="overview-title">
       <p class="eyebrow">FROM REPRESENTATIONS BACK TO TEXT</p>
-      <h2 id="overview-title">How much text survives<br class="desktop-break"> in a single token representation?</h2>
+      <h2 id="overview-title">Overview</h2>
       <p class="lead">Rep2Text learns to read a language model’s last-token hidden state—recovering roughly half of the unigrams in 16-token Wikipedia sequences, while preserving much of their meaning.</p>
       <figure class="framework"><a href="assets/framework.webp" aria-label="View the full-size Rep2Text framework"><img src="assets/framework.webp" width="1596" height="656" alt="Rep2Text architecture: a target model's last-token hidden state passes through a gated adapter into the embedding space of a decoding language model, which reconstructs the input text."></a><figcaption><strong>The Rep2Text framework.</strong> A trainable adapter bridges the target model’s representation space and the decoder’s token embedding space. The decoder reconstructs text autoregressively from the projected embeddings and prompts.</figcaption></figure>
     </section>
@@ -47,7 +47,7 @@
     </div></section>
 
     <section class="section" id="method" aria-labelledby="method-title">
-      <p class="eyebrow">THE METHOD</p><h2 id="method-title">Extract. Align. Decode.</h2>
+      <p class="eyebrow">THE METHOD</p><h2 id="method-title">Rep2Text Method</h2>
       <p class="section-intro">Reconstruct input text from one hidden-state vector, without iterative search at inference time.</p>
       <div class="steps">
         <article><span class="step-number">01</span><h3>Extract one representation</h3><p>Process an input sequence with the target LLM and retain only the residual-stream representation of its last token at a selected layer.</p><span class="step-tag">One hidden-state vector</span></article>
@@ -57,7 +57,7 @@
     </section>
 
     <section class="section results" id="results" aria-labelledby="results-title">
-      <p class="eyebrow">CROSS-MODEL INVERSION</p><h2 id="results-title">One vector retains substantial information.</h2>
+      <p class="eyebrow">CROSS-MODEL INVERSION</p><h2 id="results-title">Experimental Results</h2>
       <p class="section-intro">Layer-10 representations of 16-token Wikipedia sequences. Only the adapter is trained; the decoder remains frozen.</p>
       <div class="highlights">
         <div><strong>0.45–0.52</strong><span>ROUGE-1</span><small>Unigram overlap across eight model combinations</small></div>
@@ -89,15 +89,15 @@
     </section>
 
     <section class="section analysis-section" aria-labelledby="analysis-title">
-      <p class="eyebrow">WHAT THE REPRESENTATION PRESERVES</p><h2 id="analysis-title">Mapping the information bottleneck.</h2>
+      <p class="eyebrow">WHAT THE REPRESENTATION PRESERVES</p><h2 id="analysis-title">Representation Analysis</h2>
       <div class="analysis-grid">
-        <figure><a href="assets/sequence-length.webp" aria-label="View the full-size input-length analysis"><img src="assets/sequence-length.webp" width="780" height="388" loading="lazy" alt="Figure 4: lexical recovery falls as input length increases from 8 to 64 tokens, while semantic scores decline more slowly."></a><figcaption><h3>Meaning outlasts exact wording</h3><p>As input length grows from 8 to 64 tokens, ROUGE-1 falls from about 0.60 to 0.30. Semantic information is relatively better preserved. Llama-3.1-8B target and decoder, layer 10.</p></figcaption></figure>
-        <figure><a href="assets/layer-depth.webp" aria-label="View the full-size layer-depth analysis"><img src="assets/layer-depth.webp" width="788" height="388" loading="lazy" alt="Figure 5: inversion of 16-token inputs is strongest around layers 10 to 15, with different metrics peaking at different depths."></a><figcaption><h3>Depth changes what is recoverable</h3><p>Recovery is strongest around layers 10–15. Structure and BERTScore peak around layer 10, while lexical and entity information remain strong into layer 15. Llama-3.1-8B, 16-token inputs.</p></figcaption></figure>
+        <figure><a href="assets/sequence-length.webp" aria-label="View the full-size input-length analysis"><img src="assets/sequence-length.webp" width="780" height="388" loading="lazy" alt="Figure 4: lexical recovery falls as input length increases from 8 to 64 tokens, while semantic scores decline more slowly."></a><figcaption><h3>Effect of Input Length</h3><p>As input length grows from 8 to 64 tokens, ROUGE-1 falls from about 0.60 to 0.30. Semantic information is relatively better preserved. Llama-3.1-8B target and decoder, layer 10.</p></figcaption></figure>
+        <figure><a href="assets/layer-depth.webp" aria-label="View the full-size layer-depth analysis"><img src="assets/layer-depth.webp" width="788" height="388" loading="lazy" alt="Figure 5: inversion of 16-token inputs is strongest around layers 10 to 15, with different metrics peaking at different depths."></a><figcaption><h3>Effect of Layer Depth</h3><p>Recovery is strongest around layers 10–15. Structure and BERTScore peak around layer 10, while lexical and entity information remain strong into layer 15. Llama-3.1-8B, 16-token inputs.</p></figcaption></figure>
       </div>
     </section>
 
     <section class="section case-section" aria-labelledby="case-title">
-      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">From a hidden state back to a sentence.</h2>
+      <p class="eyebrow">A CLOSER LOOK</p><h2 id="case-title">Qualitative Example</h2>
       <p class="section-intro">An in-distribution example from Table 3. Token F1: <strong>0.94</strong> · BLEU: <strong>0.902</strong>.</p>
       <div class="case-grid">
         <article class="case baseline"><div class="case-top"><h3>Original input</h3><span>Wikipedia</span></div><p class="small-label">GROUND-TRUTH SEQUENCE</p><blockquote>Phil LaMarr<br><mark>Phillip</mark> LaMarr (born January 24, 1967) is an American actor, voice actor, comedian and writer.</blockquote></article>
@@ -107,7 +107,7 @@
     </section>
 
     <section class="section transfer" aria-labelledby="transfer-title">
-      <p class="eyebrow">BEYOND THE TRAINING DOMAIN</p><h2 id="transfer-title">Generalization to clinical text.</h2>
+      <p class="eyebrow">BEYOND THE TRAINING DOMAIN</p><h2 id="transfer-title">Cross-Domain Generalization</h2>
       <p class="section-intro">Trained on Wikipedia, evaluated on out-of-distribution clinical summaries. Mistral-7B-v0.1 target; Rep2Text uses a Qwen-2.5-14B decoder.</p>
       <div class="table-scroll" tabindex="0" role="region" aria-label="Out-of-distribution clinical results; scroll horizontally on smaller screens"><table><caption class="sr-only">Selected clinical results from Table 2 for inputs of no more than 32 tokens. Higher is better for all shown metrics.</caption><thead><tr><th scope="col">Method</th><th scope="col">ROUGE-1 ↑</th><th scope="col">Token F1 ↑</th><th scope="col">BERTScore ↑</th><th scope="col">Topic ↑</th></tr></thead><tbody>
         <tr><th scope="row">Vec2Text Base</th><td>0.14</td><td>0.13</td><td>0.53</td><td>0.21</td></tr>
